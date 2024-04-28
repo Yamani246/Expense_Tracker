@@ -1,0 +1,8 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-image: url('./assests/bg2.jpeg');
+  background-repeat: no-repeat;
+  position: relative;
+  background-size: cover;
+}

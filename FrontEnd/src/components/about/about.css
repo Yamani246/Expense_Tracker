@@ -1,0 +1,25 @@
+.container-about {
+    margin: 100px;
+    margin-left: 395px;
+    margin-right: 334px;
+    margin-top: 200px;
+    padding: 34px 91px;
+    background-color: #f0f0f070;
+    border-radius: 13px;
+    cursor: pointer;
+    text-align: center;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.664);
+}
+
+.heading {
+    font-size: x-large;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.heading:hover {
+    text-shadow: 1px 1px 1px white;
+}
+
+.text {
+    font-size: medium;
+}
