@@ -35,7 +35,7 @@ class UserSignupView(APIView):
         if user:
             return Response({'error':'Email is already registered'},status=status.HTTP_400_BAD_REQUEST)
         user=User.objects.create_user(username=username,email=email,password=password)
-        user.save()
+        Profile.objects.create(user=user)
         token, _ = Token.objects.get_or_create(user=user)
         return Response({'token': token.key}, status=status.HTTP_202_ACCEPTED)
     
@@ -73,7 +73,7 @@ class CategoryCreateView(APIView):
         name = request.data.get('name')
         category_type= request.data.get('category_type') 
         user = request.user
-        category = Category.objects.filter(name=name).first()
+        category = Category.objects.filter(name=name, user=user).first()
         if category:
             return Response({'error': f'Category "{name}" already exists'}, status=status.HTTP_400_BAD_REQUEST)
         category_type = CategoryType.objects.filter(id=category_type).first()
@@ -86,12 +86,13 @@ class CategoryCreateView(APIView):
 class CategoryListView(APIView):
     permission_classes=[AllowAny]
     def get(self,request):
+        user=request.user
         category_type_name=request.query_params.get('category_type')
         if category_type_name!='':
             category_type=CategoryType.objects.get(name=category_type_name)
-            data=Category.objects.filter(category_type=category_type,user=request.user)
+            data=Category.objects.filter(category_type=category_type,user=user)
         else:
-            data=Category.objects.all()
+            data=Category.objects.filter(user=user)
         serializer=CategorySerializer(data,many=True)
         return Response(serializer.data)
 
@@ -163,8 +164,8 @@ class TransactionView(APIView):
         category = request.query_params.get('category')
         category_type = request.query_params.get('categoryType')
         date = request.query_params.get('date')
-
-        filter_conditions = Q()
+        user=request.user
+        filter_conditions = Q(user=user)
 
         if category:
             filter_conditions &= Q(category__id=category)

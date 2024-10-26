@@ -42,15 +42,16 @@ function Categories({ setExpenseCategory, setIncomeCategory }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://127.0.0.1:8000/category/create/', formData, { headers });
-      fetchCategories('expense', setExpenseCategory);
-      fetchCategories('income', setIncomeCategory);
-      navigate('/home');
+        const response = await axios.post('http://127.0.0.1:8000/category/create/', formData, { headers });
+        fetchCategories('expense', setExpenseCategory);
+        fetchCategories('income', setIncomeCategory);
+        navigate('/home');
+        setDone('Successfully added Category');
     } catch (error) {
-      console.log('error', error);
+        console.log('Error:', error.response); // Log the complete error response
+        setDone('Error creating category. Please try again.'); // Inform the user of the error
     }
-  };
-
+};
   useEffect(() => {
     axios.get('http://127.0.0.1:8000/categorytype/list/', {
       headers,

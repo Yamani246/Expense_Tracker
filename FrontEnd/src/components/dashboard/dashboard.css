@@ -86,3 +86,66 @@
     font-size: x-large;
     margin-top: 30%;
 }
+@media (max-width: 1200px) {
+    .track_container,
+    .profile_container {
+        width: 45%; /* Increase width for larger tablets */
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .transaction_card {
+        width: 80%; /* Adjust width for better fit */
+        margin: 60px auto; /* Center card on screen */
+    }
+}
+
+@media (max-width: 768px) {
+    .track_container,
+    .profile_container,
+    .transaction_card {
+        width: 90%; /* Full width on smaller screens */
+        margin: 60px auto;
+    }
+
+    .profile_container {
+        margin-top: 135px;
+        flex-direction: column; /* Stack profile container vertically */
+        align-items: center;
+    }
+
+    .profile_pic {
+        width: 100%; /* Full width for profile picture */
+        margin-right: 0;
+        margin-left: 0;
+    }
+
+    .profile_details {
+        width: 100%; 
+    }
+
+}
+
+@media (max-width: 480px) {
+    .track_container,
+    .profile_container,
+    .transaction_card {
+        width: 135%;
+        padding: 15px; /* Less padding on mobile */
+    }
+
+    .card {
+        margin: 12px auto;
+        font-size: smaller; /* Smaller font for mobile */
+    }
+
+    .data {
+        font-size: large;
+        margin-top: 10%;
+    }
+
+    .icon {
+        height: 15px;
+        width: 10px;
+    }
+}

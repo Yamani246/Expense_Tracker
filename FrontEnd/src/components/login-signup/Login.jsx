@@ -43,7 +43,7 @@ const Login = () => {
           name="username"
           value={formData.username}
           onChange={handleChange}
-          placeholder="Username or email"
+          placeholder="Username or email (test1)"
           required
         />
         Password:
@@ -52,7 +52,7 @@ const Login = () => {
           name="password"
           value={formData.password}
           onChange={handleChange}
-          placeholder="Password"
+          placeholder="Password (test1)"
           required
         />
         <button type="submit">Login</button>

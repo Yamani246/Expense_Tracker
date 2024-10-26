@@ -23,3 +23,42 @@
 .text {
     font-size: medium;
 }
+@media (max-width: 1200px) {
+    .container-about {
+        margin: 170px auto;
+        padding: 30px 70px;
+        width: 60%;
+    }
+}
+
+@media (max-width: 768px) {
+    .container-about {
+        margin: 100px auto;
+        padding: 20px 50px;
+        width: 85%;
+    }
+
+    .heading {
+        font-size: large;
+    }
+
+    .text {
+        font-size: small;
+    }
+}
+
+@media (max-width: 480px) {
+    .container-about {
+        margin: 200px 20px;
+        padding: 15px 20px;
+        width: 100%;
+    }
+
+    .heading {
+        font-size: medium;
+    }
+
+    .text {
+        font-size: small;
+    }
+}

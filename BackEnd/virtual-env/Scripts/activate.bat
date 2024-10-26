@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set VIRTUAL_ENV=C:\Users\Yamu\Documents\expense-tracker-backend\virtual-env
+set VIRTUAL_ENV=C:\Users\Yamu\Documents\Expense_Tracker\Backend\virtual-env
 
 if not defined PROMPT set PROMPT=$P$G
 

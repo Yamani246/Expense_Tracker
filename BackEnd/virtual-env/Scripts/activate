@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="C:\Users\Yamu\Documents\expense-tracker-backend\virtual-env"
+VIRTUAL_ENV="C:\Users\Yamu\Documents\Expense_Tracker\Backend\virtual-env"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
