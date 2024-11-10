@@ -25,7 +25,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://127.0.0.1:8000/login/', formData);
+      const response = await axios.post('https://expense-tracker-six-sandy-62.vercel.app/login/', formData);
       const { token } = response.data;
       localStorage.setItem('access_token',token)
       login()

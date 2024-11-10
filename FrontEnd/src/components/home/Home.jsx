@@ -13,7 +13,7 @@ function Home() {
   useEffect(() => {
     const fetchCategories = async (categoryType, setter) => {
       try {
-        const response = await axios.get('http://127.0.0.1:8000/category/list', {
+        const response = await axios.get('https://expense-tracker-six-sandy-62.vercel.app/category/list', {
           headers: {
             'Authorization': `Token ${localStorage.getItem('access_token')}`
           },

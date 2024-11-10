@@ -26,7 +26,7 @@ function Signup() {
       return;
     }
     try{
-      const response= await axios.post('http://127.0.0.1:8000/signup/',formData)
+      const response= await axios.post('https://expense-tracker-six-sandy-62.vercel.app/signup/',formData)
       const { token } = response.data;
       localStorage.setItem('access_token',token)
       login()
