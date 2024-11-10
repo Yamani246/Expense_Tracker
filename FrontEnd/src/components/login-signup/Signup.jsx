@@ -26,7 +26,7 @@ function Signup() {
       return;
     }
     try{
-      const response= await axios.post('https://expense-tracker-nu-blond.vercel.app/api/signup/',formData)
+      const response= await axios.post('https://expense-tracker-backend-six-ochre.vercel.app/',formData)
       const { token } = response.data;
       localStorage.setItem('access_token',token)
       login()

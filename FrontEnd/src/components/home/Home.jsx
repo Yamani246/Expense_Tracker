@@ -13,7 +13,7 @@ function Home() {
   useEffect(() => {
     const fetchCategories = async (categoryType, setter) => {
       try {
-        const response = await axios.get('https://expense-tracker-nu-blond.vercel.app/api/category/list', {
+        const response = await axios.get('https://expense-tracker-backend-six-ochre.vercel.app/category/list', {
           headers: {
             'Authorization': `Token ${localStorage.getItem('access_token')}`
           },
