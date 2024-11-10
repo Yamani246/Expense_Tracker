@@ -16,7 +16,7 @@ function DashBoard() {
   const [category, setCategory] = useState([])
   const fetchProfile = async () => {
     try {
-      const response = await axios.get('https://expense-tracker-six-sandy-62.vercel.app/api/profile/', {
+      const response = await axios.get('https://expense-tracker-nu-blond.vercel.app/api/profile/', {
         headers: { 'Authorization': `Token ${localStorage.getItem('access_token')}` }
       });
       setUser(response.data.user)
@@ -27,7 +27,7 @@ function DashBoard() {
   };
   const fetchExpenditure = async () => {
     try {
-      const response = await axios.get('https://expense-tracker-six-sandy-62.vercel.app/api/expenditure/', {
+      const response = await axios.get('https://expense-tracker-nu-blond.vercel.app/api/expenditure/', {
         headers: { 'Authorization': `Token ${localStorage.getItem('access_token')}` }
       })
       setExpenditure(response.data)
@@ -38,7 +38,7 @@ function DashBoard() {
   }
   const fetchTransaction = async () => {
     try {
-      const response = await axios.get('https://expense-tracker-six-sandy-62.vercel.app/api/transaction/list', {
+      const response = await axios.get('https://expense-tracker-nu-blond.vercel.app/api/transaction/list', {
         headers: { 'Authorization': `Token ${localStorage.getItem('access_token')}` }, params:sort
       }
      
@@ -51,7 +51,7 @@ function DashBoard() {
     }
   }
   const fetchCategoryType = () => {
-    axios.get('https://expense-tracker-six-sandy-62.vercel.app/api/categorytype/list/', {
+    axios.get('https://expense-tracker-nu-blond.vercel.app/api/categorytype/list/', {
       headers: {
         'Authorization': `Token ${localStorage.getItem('access_token')}`
       },
@@ -65,7 +65,7 @@ function DashBoard() {
   }
   const fetchCategories = async () => {
     try {
-      const response = await axios.get('https://expense-tracker-six-sandy-62.vercel.app/api/category/list', {
+      const response = await axios.get('https://expense-tracker-nu-blond.vercel.app/api/category/list', {
         headers: {
           'Authorization': `Token ${localStorage.getItem('access_token')}`
         },
@@ -86,7 +86,7 @@ function DashBoard() {
   const handleDelete = async (itemId, categoryType) => {
     try {
       console.log(itemId)
-      const response = await axios.delete('https://expense-tracker-six-sandy-62.vercel.app/api/transaction/delete/', {
+      const response = await axios.delete('https://expense-tracker-nu-blond.vercel.app/api/transaction/delete/', {
         headers: {
           'Authorization': `Token ${localStorage.getItem('access_token')}`
         },

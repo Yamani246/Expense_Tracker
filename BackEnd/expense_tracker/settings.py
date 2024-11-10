@@ -138,6 +138,6 @@ REST_FRAMEWORK = {
 }
 
 CORS_ORIGIN_WHITELIST = [
-    'http://localhost:5173',
-    'https://expense-tracker-six-sandy-62.vercel.app',
+    # 'http://localhost:5173',
+    'https://expense-tracker-nu-blond.vercel.app/',
 ]
