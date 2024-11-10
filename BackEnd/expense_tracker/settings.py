@@ -139,5 +139,5 @@ REST_FRAMEWORK = {
 
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:5173',
-    'https://your-frontend-url.vercel.app',
+    'https://expense-tracker-six-sandy-62.vercel.app',
 ]
