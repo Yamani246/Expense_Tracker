@@ -18,7 +18,7 @@ function Categories({ setExpenseCategory, setIncomeCategory }) {
 
   const fetchCategories = async (categoryType, setter) => {
     try {
-      const response = await axios.get('https://expense-tracker-six-sandy-62.vercel.app/category/list', {
+      const response = await axios.get('https://expense-tracker-six-sandy-62.vercel.app/api/category/list', {
         headers: {
           'Authorization': `Token ${localStorage.getItem('access_token')}`
         },
@@ -42,7 +42,7 @@ function Categories({ setExpenseCategory, setIncomeCategory }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-        const response = await axios.post('https://expense-tracker-six-sandy-62.vercel.app/category/create/', formData, { headers });
+        const response = await axios.post('https://expense-tracker-six-sandy-62.vercel.app/api/category/create/', formData, { headers });
         fetchCategories('expense', setExpenseCategory);
         fetchCategories('income', setIncomeCategory);
         navigate('/home');
@@ -53,7 +53,7 @@ function Categories({ setExpenseCategory, setIncomeCategory }) {
     }
 };
   useEffect(() => {
-    axios.get('https://expense-tracker-six-sandy-62.vercel.app/categorytype/list/', {
+    axios.get('https://expense-tracker-six-sandy-62.vercel.app/api/categorytype/list/', {
       headers,
     })
       .then(response => {

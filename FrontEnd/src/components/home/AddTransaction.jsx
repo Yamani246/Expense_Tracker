@@ -23,7 +23,7 @@ function AddTransaction({ categoryType,categories }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('https://expense-tracker-six-sandy-62.vercel.app/transaction/create/',formData,{ 
+      const response = await axios.post('https://expense-tracker-six-sandy-62.vercel.app/api/transaction/create/',formData,{ 
         headers: {
         'Authorization': `Token ${localStorage.getItem('access_token')}`
       }}).then(setDone('Successfully added'))
