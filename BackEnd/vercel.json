@@ -1,13 +1,19 @@
 {
-    "builds": [{
+    "version": 2,
+    "builds": [
+      {
         "src": "expense_tracker/wsgi.py",
         "use": "@vercel/python",
-        "config": { "maxLambdaSize": "15mb", "runtime": "python3.9" }
-    }],
+        "config": { "runtime": "python3.9" }
+      },
+      {
+        "src": "FrontEnd/package.json",
+        "use": "@vercel/next"
+      }
+    ],
     "routes": [
-        {
-            "src": "/(.*)",
-            "dest": "expense_tracker/wsgi.py"
-        }
+      { "src": "/api/(.*)", "dest": "/expense_tracker/wsgi.py" },
+      { "src": "/(.*)", "dest": "/FrontEnd/$1" }
     ]
-}
+  }
+  
