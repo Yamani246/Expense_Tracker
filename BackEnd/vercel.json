@@ -12,7 +12,7 @@
       }
     ],
     "routes": [
-      { "src": "/api/(.*)", "dest": "/expense_tracker/wsgi.py" },
+      { "src": "/(.*)", "dest": "/expense_tracker/wsgi.py" },
       { "src": "/(.*)", "dest": "/FrontEnd/$1" }
     ]
   }
