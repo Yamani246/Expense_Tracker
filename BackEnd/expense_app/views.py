@@ -47,24 +47,36 @@ class TransactionView(generics.RetrieveUpdateDestroyAPIView):
     
 class TransactionCreateView(generics.CreateAPIView):
     permission_classes = [AllowAny]
-    def post(self,request):
-        amount=int(request.data.get('amount'))
-        user=request.user
-        category_id=request.data.get('category')
-        date=request.data.get('date')
-        print(date)
-        category=Category.objects.filter(id=category_id).first()
-        category_type=category.category_type.name
-        user=request.user
-        account=Profile.objects.get(user=user)
-        if category_type=='expense':
-            account.Balance=account.Balance-(amount)
+    serializer_class = TransactionSerializer  # Define the serializer class for automatic serialization
+    
+    def perform_create(self, serializer):
+        # Custom logic before saving the object
+        amount = int(self.request.data.get('amount'))
+        category_id = self.request.data.get('category')
+        date = self.request.data.get('date')
+        category = Category.objects.filter(id=category_id).first()
+        
+        if category:
+            category_type = category.category_type.name
         else:
-            account.Balance=account.Balance+amount
+            return Response({"error": "Invalid category"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        user = self.request.user
+        account = Profile.objects.get(user=user)
+        
+        # Update balance based on category type
+        if category_type == 'expense':
+            account.Balance -= amount
+        else:
+            account.Balance += amount
+        
         account.save()
-        transaction=Transaction.objects.create(amount=amount,date=date,user=user,category=category)
-        serializer=TransactionSerializer(transaction)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        
+        # Create the transaction instance and save it
+        transaction = serializer.save(amount=amount, date=date, user=user, category=category)
+
+        # Returning the serialized data
+        return transaction
 
 class CategoryCreateView(APIView):
     permission_classes = [AllowAny]
