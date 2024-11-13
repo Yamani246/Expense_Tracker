@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-8gw*l4_l#3-kx)cebi!!357!wx6ik8+58(@!eq#!ro4!#t85ph
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.vercel.app']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -139,5 +139,5 @@ REST_FRAMEWORK = {
 
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:5173',
-    'https://expense-tracker-self-delta-35.vercel.app/',
+    'https://expense-tracker-self-delta-35.vercel.app',
 ]

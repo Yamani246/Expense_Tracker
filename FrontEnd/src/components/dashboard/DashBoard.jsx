@@ -16,7 +16,7 @@ function DashBoard() {
   const [category, setCategory] = useState([])
   const fetchProfile = async () => {
     try {
-      const response = await axios.get('https://expense-tracker-backend-six-ochre.vercel.app/profile/', {
+      const response = await axios.get('http://127.0.0.1:8000/profile/', {
         headers: { 'Authorization': `Token ${localStorage.getItem('access_token')}` }
       });
       setUser(response.data.user)
@@ -27,7 +27,7 @@ function DashBoard() {
   };
   const fetchExpenditure = async () => {
     try {
-      const response = await axios.get('https://expense-tracker-backend-six-ochre.vercel.app/expenditure/', {
+      const response = await axios.get('http://127.0.0.1:8000/expenditure/', {
         headers: { 'Authorization': `Token ${localStorage.getItem('access_token')}` }
       })
       setExpenditure(response.data)
@@ -38,7 +38,7 @@ function DashBoard() {
   }
   const fetchTransaction = async () => {
     try {
-      const response = await axios.get('https://expense-tracker-backend-six-ochre.vercel.app/transaction/list', {
+      const response = await axios.get('http://127.0.0.1:8000/transaction/list', {
         headers: { 'Authorization': `Token ${localStorage.getItem('access_token')}` }, params:sort
       }
      
@@ -51,7 +51,7 @@ function DashBoard() {
     }
   }
   const fetchCategoryType = () => {
-    axios.get('https://expense-tracker-backend-six-ochre.vercel.app/categorytype/list/', {
+    axios.get('http://127.0.0.1:8000/categorytype/list/', {
       headers: {
         'Authorization': `Token ${localStorage.getItem('access_token')}`
       },
@@ -65,7 +65,7 @@ function DashBoard() {
   }
   const fetchCategories = async () => {
     try {
-      const response = await axios.get('https://expense-tracker-backend-six-ochre.vercel.app/category/list', {
+      const response = await axios.get('http://127.0.0.1:8000/category/list', {
         headers: {
           'Authorization': `Token ${localStorage.getItem('access_token')}`
         },
@@ -86,7 +86,8 @@ function DashBoard() {
   const handleDelete = async (itemId, categoryType) => {
     try {
       console.log(itemId)
-      const response = await axios.delete('https://expense-tracker-backend-six-ochre.vercel.app/transaction/delete/', {
+      const response = await axios.delete(
+        'http://127.0.0.1:8000/transaction/delete/', {
         headers: {
           'Authorization': `Token ${localStorage.getItem('access_token')}`
         },

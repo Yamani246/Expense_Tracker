@@ -47,36 +47,24 @@ class TransactionView(generics.RetrieveUpdateDestroyAPIView):
     
 class TransactionCreateView(generics.CreateAPIView):
     permission_classes = [AllowAny]
-    serializer_class = TransactionSerializer  # Define the serializer class for automatic serialization
-    
-    def perform_create(self, serializer):
-        # Custom logic before saving the object
-        amount = int(self.request.data.get('amount'))
-        category_id = self.request.data.get('category')
-        date = self.request.data.get('date')
-        category = Category.objects.filter(id=category_id).first()
-        
-        if category:
-            category_type = category.category_type.name
+    def post(self,request):
+        amount=int(request.data.get('amount'))
+        user=request.user
+        category_id=request.data.get('category')
+        date=request.data.get('date')
+        print(date)
+        category=Category.objects.filter(id=category_id).first()
+        category_type=category.category_type.name
+        user=request.user
+        account=Profile.objects.get(user=user)
+        if category_type=='expense':
+            account.Balance=account.Balance-(amount)
         else:
-            return Response({"error": "Invalid category"}, status=status.HTTP_400_BAD_REQUEST)
-        
-        user = self.request.user
-        account = Profile.objects.get(user=user)
-        
-        # Update balance based on category type
-        if category_type == 'expense':
-            account.Balance -= amount
-        else:
-            account.Balance += amount
-        
+            account.Balance=account.Balance+amount
         account.save()
-        
-        # Create the transaction instance and save it
-        transaction = serializer.save(amount=amount, date=date, user=user, category=category)
-
-        # Returning the serialized data
-        return transaction
+        transaction=Transaction.objects.create(amount=amount,date=date,user=user,category=category)
+        serializer=TransactionSerializer(transaction)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 class CategoryCreateView(APIView):
     permission_classes = [AllowAny]
@@ -96,25 +84,18 @@ class CategoryCreateView(APIView):
     
 
 class CategoryListView(APIView):
-    permission_classes = [AllowAny]
-
-    def get(self, request):
-        user = request.user
-        category_type_name = request.query_params.get('category_type')
-
-        # If 'category_type_name' is provided in query params
-        if category_type_name:
-            try:
-                category_type = CategoryType.objects.get(name=category_type_name)
-                data = Category.objects.filter(category_type=category_type, user=user)
-            except CategoryType.DoesNotExist:
-                return Response({"error": "CategoryType not found"}, status=status.HTTP_404_NOT_FOUND)
+    permission_classes=[AllowAny]
+    def get(self,request):
+        user=request.user
+        category_type_name=request.query_params.get('category_type')
+        if category_type_name!='':
+            category_type=CategoryType.objects.get(name=category_type_name)
+            data=Category.objects.filter(category_type=category_type,user=user)
         else:
-            # If no category_type_name is provided, fetch all categories for the user
-            data = Category.objects.filter(user=user)
-
-        serializer = CategorySerializer(data, many=True)
+            data=Category.objects.filter(user=user)
+        serializer=CategorySerializer(data,many=True)
         return Response(serializer.data)
+
 class CategoryTypeView(generics.ListCreateAPIView):
     permission_classes=[AllowAny]
     queryset=CategoryType.objects.all()
