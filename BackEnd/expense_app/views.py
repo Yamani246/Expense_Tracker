@@ -47,7 +47,7 @@ class TransactionView(generics.RetrieveUpdateDestroyAPIView):
     
 class TransactionCreateView(generics.CreateAPIView):
     permission_classes = [AllowAny]
-    
+    serializer_class = TransactionSerializer
     def post(self, request):
         # Validate required fields
         amount = request.data.get('amount')
