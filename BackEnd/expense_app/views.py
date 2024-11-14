@@ -41,12 +41,12 @@ class UserSignupView(APIView):
     
 
 class TransactionView(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     queryset=Transaction.objects.all()
     serializer_class=TransactionSerializer
     
 class TransactionCreateView(generics.CreateAPIView):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     def post(self,request):
         amount=int(request.data.get('amount'))
         user=request.user
@@ -67,7 +67,7 @@ class TransactionCreateView(generics.CreateAPIView):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 class CategoryCreateView(APIView):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
     def post(self, request):
         name = request.data.get('name')
@@ -83,11 +83,6 @@ class CategoryCreateView(APIView):
 
     
 
-from rest_framework.permissions import AllowAny
-from rest_framework.response import Response
-from rest_framework.views import APIView
-from expense_app.models import Category, CategoryType
-from expense_app.serializers import CategorySerializer
 
 class CategoryListView(APIView):
     permission_classes = [AllowAny]
@@ -133,7 +128,7 @@ class ProfileView(APIView):
         return Response({"error": "User not authenticated"}, status=401)
     
 class ExpenditureView(APIView):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     
     def get(self, request):
         user = request.user
@@ -176,7 +171,7 @@ class ExpenditureView(APIView):
         })
     
 class TransactionView(APIView):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
         category = request.query_params.get('category')
