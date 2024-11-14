@@ -7,16 +7,12 @@ A web application that helps users track their expenses and manage their income.
 - **User Authentication**: Register, log in, and manage user accounts.
 - **Expense Management**: Track and categorize expenses, edit and delete entries.
 - **Income Management**: Record income sources and manage them.
-- **Budgeting**: Set and track monthly budget goals.
-- **Reports**: Generate summary reports of expenses and income.
-- **Responsive Design**: Mobile-friendly UI built with React.
 
 ## Tech Stack
 
 - **Frontend**: React.js, Axios (for API calls), CSS
 - **Backend**: Django, Django REST Framework
-- **Database**: SQLite (default), PostgreSQL/MySQL (for production)
-- **Authentication**: JWT-based Authentication
+- **Database**: SQLite (default)
 - **Version Control**: Git
 
 ## Installation
@@ -36,7 +32,7 @@ A web application that helps users track their expenses and manage their income.
     Clone the repository to your local machine:
 
     ```bash
-    git clone https://github.com/yourusername/expense_tracker.git
+    git clone https://github.com/Yamani246/Expense_Tracker.git
     cd expense_tracker
 
 2. Set Up the Backend (Django)
