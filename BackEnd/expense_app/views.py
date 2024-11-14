@@ -116,18 +116,22 @@ class CategoryTypeView(generics.ListCreateAPIView):
     serializer_class=CategoryTypeSerializer
 
 class ProfileView(APIView):
-    permission_classes=[AllowAny]
-    def get(self,request):
-        user=request.user
-        profile=Profile.objects.filter(user=user).first()
-        profile_serializer=ProfileSerializer(profile)
-        user_serializer=UserSerializer(user)
-        serializer={
-            'profile':profile_serializer.data,
-            'user':user_serializer.data
-        }
-        return Response(serializer)
+    permission_classes = [IsAuthenticated]  
 
+    def get(self, request):
+        user = request.user
+        if user.is_authenticated:
+            profile = Profile.objects.filter(user=user).first()
+            profile_serializer = ProfileSerializer(profile) if profile else None
+            user_serializer = UserSerializer(user)
+            serializer = {
+                'profile': profile_serializer.data if profile else None,
+                'user': user_serializer.data
+            }
+            return Response(serializer)
+        
+        return Response({"error": "User not authenticated"}, status=401)
+    
 class ExpenditureView(APIView):
     permission_classes = [AllowAny]
     
