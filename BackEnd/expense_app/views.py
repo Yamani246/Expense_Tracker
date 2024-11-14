@@ -47,24 +47,51 @@ class TransactionView(generics.RetrieveUpdateDestroyAPIView):
     
 class TransactionCreateView(generics.CreateAPIView):
     permission_classes = [IsAuthenticated]
-    def post(self,request):
-        amount=int(request.data.get('amount'))
-        user=request.user
-        category_id=request.data.get('category')
-        date=request.data.get('date')
-        print(date)
-        category=Category.objects.filter(id=category_id).first()
-        category_type=category.category_type.name
-        user=request.user
-        account=Profile.objects.get(user=user)
-        if category_type=='expense':
-            account.Balance=account.Balance-(amount)
+    
+    def post(self, request):
+        # Validate required fields
+        amount = request.data.get('amount')
+        category_id = request.data.get('category')
+        date = request.data.get('date')
+        
+        if not amount or not category_id or not date:
+            return Response({"error": "Missing required fields."}, status=status.HTTP_400_BAD_REQUEST)
+        
+        try:
+            amount = int(amount)
+        except ValueError:
+            return Response({"error": "Invalid amount."}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Fetch category and handle errors
+        category = Category.objects.filter(id=category_id).first()
+        if not category:
+            return Response({"error": "Category not found."}, status=status.HTTP_400_BAD_REQUEST)
+
+        category_type = category.category_type.name
+
+        # Fetch profile and handle errors
+        user = request.user
+        try:
+            account = Profile.objects.get(user=user)
+        except Profile.DoesNotExist:
+            return Response({"error": "Profile not found for the user."}, status=status.HTTP_400_BAD_REQUEST)
+
+
+        # Update account balance
+        if category_type == 'expense':
+            account.Balance -= amount
         else:
-            account.Balance=account.Balance+amount
+            account.Balance += amount
+
         account.save()
-        transaction=Transaction.objects.create(amount=amount,date=date,user=user,category=category)
-        serializer=TransactionSerializer(transaction)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+        # Create transaction
+        transaction = Transaction.objects.create(amount=amount, date=date, user=user, category=category)
+        serializer = TransactionSerializer(transaction)
+
+        return Response({"message": "Transaction created successfully.", "transaction": serializer.data}, status=status.HTTP_201_CREATED)
+
 
 class CategoryCreateView(APIView):
     permission_classes = [IsAuthenticated]
