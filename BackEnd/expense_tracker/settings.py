@@ -139,5 +139,5 @@ REST_FRAMEWORK = {
 
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:5173',
-    'https://expense-tracker-self-delta-35.vercel.app',
+    'https://expense-tracker-git-main-yamanis-projects.vercel.app/',
 ]
