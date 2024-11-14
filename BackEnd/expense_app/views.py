@@ -84,17 +84,24 @@ class CategoryCreateView(APIView):
     
 
 class CategoryListView(APIView):
-    permission_classes=[AllowAny]
-    def get(self,request):
-        user=request.user
-        category_type_name=request.query_params.get('category_type')
-        if category_type_name!='':
-            category_type=CategoryType.objects.get(name=category_type_name)
-            data=Category.objects.filter(category_type=category_type,user=user)
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        user = request.user
+        category_type_name = request.query_params.get('category_type')
+        
+        if category_type_name:
+            try:
+                category_type = CategoryType.objects.get(name=category_type_name)
+                data = Category.objects.filter(category_type=category_type, user=user)
+            except CategoryType.DoesNotExist:
+                return Response({"error": "Invalid category type"}, status=400)
         else:
-            data=Category.objects.filter(user=user)
-        serializer=CategorySerializer(data,many=True)
+            data = Category.objects.filter(user=user)
+        
+        serializer = CategorySerializer(data, many=True)
         return Response(serializer.data)
+
 
 class CategoryTypeView(generics.ListCreateAPIView):
     permission_classes=[AllowAny]
