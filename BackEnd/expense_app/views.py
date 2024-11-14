@@ -46,7 +46,7 @@ class TransactionView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class=TransactionSerializer
     
 class TransactionCreateView(generics.CreateAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
     
     def post(self, request):
         # Validate required fields
@@ -94,7 +94,7 @@ class TransactionCreateView(generics.CreateAPIView):
 
 
 class CategoryCreateView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def post(self, request):
         name = request.data.get('name')
@@ -221,7 +221,7 @@ class TransactionView(APIView):
         return Response(serializer.data)
     
 class TransactionDelete(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
     def delete(self, request):
         try:
             profile = Profile.objects.get(user=request.user)
