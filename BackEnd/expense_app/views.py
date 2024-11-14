@@ -37,7 +37,7 @@ class UserSignupView(APIView):
         user=User.objects.create_user(username=username,email=email,password=password)
         Profile.objects.create(user=user)
         token, _ = Token.objects.get_or_create(user=user)
-        return Response({'token': token.key}, status=status.HTTP_202_ACCEPTED)
+        return Response({'token': token.key}, status=status.HTTP_201_CREATED)
     
 
 class TransactionView(generics.RetrieveUpdateDestroyAPIView):
