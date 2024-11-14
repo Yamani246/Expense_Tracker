@@ -23,21 +23,26 @@ class UserLoginView(APIView):
             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
 class UserSignupView(APIView):
-    permission_classes=[AllowAny]
-    def post(self,request):
-        username=request.data.get('username')
-        password=request.data.get('password')
-        email=request.data.get('email')
-        user=User.objects.filter(username=username).first()
-        if user:
-            return Response({'error':'Username already exist'},status=status.HTTP_400_BAD_REQUEST)
-        user=User.objects.filter(email=email).first()
-        if user:
-            return Response({'error':'Email is already registered'},status=status.HTTP_400_BAD_REQUEST)
-        user=User.objects.create_user(username=username,email=email,password=password)
-        Profile.objects.create(user=user)
-        token, _ = Token.objects.get_or_create(user=user)
-        return Response({'token': token.key}, status=status.HTTP_201_CREATED)
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        username = request.data.get('username')
+        password = request.data.get('password')
+        email = request.data.get('email')
+
+        if not username or not password or not email:
+            return Response({'error': 'Missing required fields'}, status=status.HTTP_400_BAD_REQUEST)
+        if User.objects.filter(username=username).exists():
+            return Response({'error': 'Username already exists'}, status=status.HTTP_400_BAD_REQUEST)
+        if User.objects.filter(email=email).exists():
+            return Response({'error': 'Email already exists'}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            user = User.objects.create_user(username=username, email=email, password=password)
+            return Response({'message': 'User created successfully'}, status=status.HTTP_201_CREATED)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
     
 
 class TransactionView(generics.RetrieveUpdateDestroyAPIView):
