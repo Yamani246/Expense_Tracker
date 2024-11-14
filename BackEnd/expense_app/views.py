@@ -83,13 +83,25 @@ class CategoryCreateView(APIView):
 
     
 
+from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from expense_app.models import Category, CategoryType
+from expense_app.serializers import CategorySerializer
+
 class CategoryListView(APIView):
     permission_classes = [AllowAny]
 
     def get(self, request):
         user = request.user
+        
+        # Check if the user is authenticated
+        if not user.is_authenticated:
+            return Response({"error": "User not authenticated"}, status=401)
+        
         category_type_name = request.query_params.get('category_type')
         
+        # Check for category type name and fetch corresponding category type
         if category_type_name:
             try:
                 category_type = CategoryType.objects.get(name=category_type_name)
