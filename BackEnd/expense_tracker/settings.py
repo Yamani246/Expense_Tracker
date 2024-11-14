@@ -138,6 +138,6 @@ REST_FRAMEWORK = {
 }
 
 CORS_ORIGIN_WHITELIST = [
-    'http://localhost:5173',
-    'https://expense-tracker-git-main-yamanis-projects.vercel.app',
+    'http://localhost:5173',  
+    'https://expense-tracker-hmt1pqbi1-yamanis-projects.vercel.app',
 ]

@@ -85,7 +85,7 @@ class CategoryCreateView(APIView):
 
 
 class CategoryListView(APIView):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
         user = request.user
@@ -194,7 +194,7 @@ class TransactionView(APIView):
         return Response(serializer.data)
     
 class TransactionDelete(APIView):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     def delete(self, request):
         try:
             profile = Profile.objects.get(user=request.user)
