@@ -67,7 +67,7 @@ function Categories({ setExpenseCategory, setIncomeCategory }) {
   return (
     <div className='categories-container'>
       <div className='categories-form'>
-        <h2>ADD Category</h2>
+        <h2>Add Category</h2>
         <form onSubmit={handleSubmit}>
           <input type='text' placeholder='Category' value={formData.name} name='name' onChange={handleChange} required /><br /><br />
           Category Type:&nbsp;&nbsp;
