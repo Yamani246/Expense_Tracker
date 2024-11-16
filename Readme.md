@@ -83,23 +83,23 @@ A web application that helps users track their expenses and manage their income.
 Here are some screenshots of the **Expense Tracker** application:
 
 ### Wellcome Page:
-![Wellcome Page](demo_pics/wellcome_page.png)
+![Wellcome Page](Demo_pics/wellcome_page.png)
 
 ### Signup Page:
-![Signup Page](demo_pics/Signup.png)
+![Signup Page](Demo_pics/Signup.png)
 
 ### About Page:
-![About Page](demo_pics/about.png)
+![About Page](Demo_pics/about.png)
 
 ### Login Page:
-![Login Page](demo_pics/login.png)
+![Login Page](Demo_pics/login.png)
 
 ### Home Page:
-![Home Page](demo_pics/home.png)
+![Home Page](Demo_pics/home.png)
 
 ### Dashboard Page:
-![Dashboard Page](demo_pics/dashboard.png)
+![Dashboard Page](Demo_pics/dashboard.png)
 
 ### Dashboard Page (Transaction List):
-![Dashboard Page (Transaction List)](demo_pics/expenditure.png)
+![Dashboard Page (Transaction List)](Demo_pics/expenditure.png)
 
