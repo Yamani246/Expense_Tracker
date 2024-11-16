@@ -61,7 +61,6 @@ A web application that helps users track their expenses and manage their income.
 - Start the Django development server:
 
     ```bash
-    Copy code
     python manage.py runserver
 3. Set Up the Frontend (React)
 - Navigate to the frontend folder:
@@ -85,11 +84,11 @@ Here are some screenshots of the **Expense Tracker** application:
 ### Splash Page:
 ![Splash Page](Demo_pics/SplashPage.png)
 
-### Signup Page:
-![Signup Page](Demo_pics/signup.png)
-
 ### About Page:
 ![About Page](Demo_pics/about.png)
+
+### Signup Page:
+![Signup Page](Demo_pics/signup.png)
 
 ### Login Page:
 ![Login Page](Demo_pics/login.png)
