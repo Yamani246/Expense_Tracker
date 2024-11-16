@@ -23,7 +23,7 @@ function AddTransaction({ categoryType,categories }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('https://expense-tracker-backend-liard.vercel.app/transaction/create/',formData,{ 
+      const response = await axios.post('http://127.0.0.1:8000/transaction/create/',formData,{ 
         headers: {
         'Authorization': `Token ${localStorage.getItem('access_token')}`
       }}).then(setDone('Successfully added'))
@@ -38,7 +38,7 @@ function AddTransaction({ categoryType,categories }) {
       <h2>Add {categoryType === 'income' ? 'Income' : 'Expense'}</h2>
       <div className='add-form'>
         <form onSubmit={handleSubmit}>
-          <input type='number' name='amount' placeholder='Amount spent' value={formData.amount} onChange={handleChange} required/><br /><br />
+          <input type='number' name='amount' placeholder='Amount' value={formData.amount} onChange={handleChange} required/><br /><br />
           Category:&nbsp;&nbsp;
           <select name='category' value={formData.category} onChange={handleChange} required>
           <option value='' disabled>Select a category</option>

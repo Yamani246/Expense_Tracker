@@ -78,3 +78,28 @@ A web application that helps users track their expenses and manage their income.
     ```bash
     npm start
 * The frontend should now be running at http://localhost:3000/, and the backend API at http://localhost:8000/.
+
+## 🖼️ Demo Pictures:
+Here are some screenshots of the **Expense Tracker** application:
+
+### Wellcome Page:
+![Wellcome Page](demo_pics/wellcome_page.png)
+
+### Signup Page:
+![Signup Page](demo_pics/Signup.png)
+
+### About Page:
+![About Page](demo_pics/about.png)
+
+### Login Page:
+![Login Page](demo_pics/login.png)
+
+### Home Page:
+![Home Page](demo_pics/home.png)
+
+### Dashboard Page:
+![Dashboard Page](demo_pics/dashboard.png)
+
+### Dashboard Page (Transaction List):
+![Dashboard Page (Transaction List)](demo_pics/expenditure.png)
+

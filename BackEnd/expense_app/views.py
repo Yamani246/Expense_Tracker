@@ -23,38 +23,33 @@ class UserLoginView(APIView):
             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
 class UserSignupView(APIView):
-    permission_classes = [AllowAny]
-
-    def post(self, request):
-        username = request.data.get('username')
-        password = request.data.get('password')
-        email = request.data.get('email')
-
-        if not username or not password or not email:
-            return Response({'error': 'Missing required fields'}, status=status.HTTP_400_BAD_REQUEST)
-        if User.objects.filter(username=username).exists():
-            return Response({'error': 'Username already exists'}, status=status.HTTP_400_BAD_REQUEST)
-        if User.objects.filter(email=email).exists():
-            return Response({'error': 'Email already exists'}, status=status.HTTP_400_BAD_REQUEST)
-
-        try:
-            user = User.objects.create_user(username=username, email=email, password=password)
-            return Response({'message': 'User created successfully'}, status=status.HTTP_201_CREATED)
-        except Exception as e:
-            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
+    permission_classes=[AllowAny]
+    def post(self,request):
+        username=request.data.get('username')
+        password=request.data.get('password')
+        email=request.data.get('email')
+        user=User.objects.filter(username=username).first()
+        if user:
+            return Response({'error':'Username already exist'},status=status.HTTP_400_BAD_REQUEST)
+        user=User.objects.filter(email=email).first()
+        if user:
+            return Response({'error':'Email is already registered'},status=status.HTTP_400_BAD_REQUEST)
+        user=User.objects.create_user(username=username,email=email,password=password)
+        Profile.objects.create(user=user)
+        token, _ = Token.objects.get_or_create(user=user)
+        return Response({'token': token.key}, status=status.HTTP_202_ACCEPTED)
     
 
 class TransactionView(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
     queryset=Transaction.objects.all()
     serializer_class=TransactionSerializer
-    
+
 class TransactionCreateView(generics.CreateAPIView):
     permission_classes = [AllowAny]
     serializer_class = TransactionSerializer
+
     def post(self, request):
-        # Validate required fields
         amount = request.data.get('amount')
         category_id = request.data.get('category')
         date = request.data.get('date')
@@ -67,22 +62,18 @@ class TransactionCreateView(generics.CreateAPIView):
         except ValueError:
             return Response({"error": "Invalid amount."}, status=status.HTTP_400_BAD_REQUEST)
 
-        # Fetch category and handle errors
         category = Category.objects.filter(id=category_id).first()
         if not category:
             return Response({"error": "Category not found."}, status=status.HTTP_400_BAD_REQUEST)
 
         category_type = category.category_type.name
-
-        # Fetch profile and handle errors
         user = request.user
+
         try:
             account = Profile.objects.get(user=user)
         except Profile.DoesNotExist:
             return Response({"error": "Profile not found for the user."}, status=status.HTTP_400_BAD_REQUEST)
 
-
-        # Update account balance
         if category_type == 'expense':
             account.Balance -= amount
         else:
@@ -90,13 +81,14 @@ class TransactionCreateView(generics.CreateAPIView):
 
         account.save()
 
+        transaction = Transaction.objects.create(
+            user=user,
+            category=category,
+            amount=amount,
+            date=date
+        )
 
-        # Create transaction
-        transaction = Transaction.objects.create(amount=amount, date=date, user=user, category=category)
-        serializer = TransactionSerializer(transaction)
-
-        return Response({"message": "Transaction created successfully.", "transaction": serializer.data}, status=status.HTTP_201_CREATED)
-
+        return Response({"message": "Transaction added successfully"}, status=status.HTTP_201_CREATED)
 
 class CategoryCreateView(APIView):
     permission_classes = [AllowAny]
@@ -115,27 +107,18 @@ class CategoryCreateView(APIView):
 
     
 
-
 class CategoryListView(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def get(self, request):
-        user = request.user
-        if not user.is_authenticated:
-            return Response({"error": "User not authenticated"}, status=401)
-        category_type_name = request.query_params.get('category_type')
-        if category_type_name:
-            try:
-                category_type = CategoryType.objects.get(name=category_type_name)
-                data = Category.objects.filter(category_type=category_type, user=user)
-            except CategoryType.DoesNotExist:
-                return Response({"error": "Invalid category type"}, status=400)
+    permission_classes=[AllowAny]
+    def get(self,request):
+        user=request.user
+        category_type_name=request.query_params.get('category_type')
+        if category_type_name!='':
+            category_type=CategoryType.objects.get(name=category_type_name)
+            data=Category.objects.filter(category_type=category_type,user=user)
         else:
-            data = Category.objects.filter(user=user)
-        
-        serializer = CategorySerializer(data, many=True)
+            data=Category.objects.filter(user=user)
+        serializer=CategorySerializer(data,many=True)
         return Response(serializer.data)
-
 
 class CategoryTypeView(generics.ListCreateAPIView):
     permission_classes=[AllowAny]
@@ -143,24 +126,20 @@ class CategoryTypeView(generics.ListCreateAPIView):
     serializer_class=CategoryTypeSerializer
 
 class ProfileView(APIView):
-    permission_classes = [IsAuthenticated]  
+    permission_classes=[AllowAny]
+    def get(self,request):
+        user=request.user
+        profile=Profile.objects.filter(user=user).first()
+        profile_serializer=ProfileSerializer(profile)
+        user_serializer=UserSerializer(user)
+        serializer={
+            'profile':profile_serializer.data,
+            'user':user_serializer.data
+        }
+        return Response(serializer)
 
-    def get(self, request):
-        user = request.user
-        if user.is_authenticated:
-            profile = Profile.objects.filter(user=user).first()
-            profile_serializer = ProfileSerializer(profile) if profile else None
-            user_serializer = UserSerializer(user)
-            serializer = {
-                'profile': profile_serializer.data if profile else None,
-                'user': user_serializer.data
-            }
-            return Response(serializer)
-        
-        return Response({"error": "User not authenticated"}, status=401)
-    
 class ExpenditureView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
     
     def get(self, request):
         user = request.user
@@ -203,7 +182,7 @@ class ExpenditureView(APIView):
         })
     
 class TransactionView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def get(self, request):
         category = request.query_params.get('category')
