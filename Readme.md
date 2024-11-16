@@ -39,7 +39,6 @@ A web application that helps users track their expenses and manage their income.
 - Navigate to the backend folder:
 
     ``` bash
-    Copy code
     cd backend
 - Create and activate a virtual environment:
 
