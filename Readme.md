@@ -86,7 +86,7 @@ Here are some screenshots of the **Expense Tracker** application:
 ![Wellcome Page](Demo_pics/wellcome_page.png)
 
 ### Signup Page:
-![Signup Page](Demo_pics/Signup.png)
+![Signup Page](Demo_pics/signup.png)
 
 ### About Page:
 ![About Page](Demo_pics/about.png)
