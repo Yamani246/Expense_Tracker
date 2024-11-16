@@ -83,7 +83,7 @@ A web application that helps users track their expenses and manage their income.
 Here are some screenshots of the **Expense Tracker** application:
 
 ### Splash Page:
-!Splash Page](Demo_pics/SplashPage.png)
+![Splash Page](Demo_pics/SplashPage.png)
 
 ### Signup Page:
 ![Signup Page](Demo_pics/signup.png)
