@@ -74,7 +74,7 @@ A web application that helps users track their expenses and manage their income.
 - Start the React development server:
 
     ```bash
-    npm start
+    npm run dev
 * The frontend should now be running at http://localhost:3000/, and the backend API at http://localhost:8000/.
 
 ## 🖼️ Demo Pictures:
